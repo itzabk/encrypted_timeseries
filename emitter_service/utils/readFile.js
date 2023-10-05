@@ -10,4 +10,4 @@ const readFile = (path) => {
   }
 };
 
-module.exports = { readFile };
+module.exports = readFile;
