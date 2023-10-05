@@ -13,6 +13,7 @@ const helmet = require("helmet");
 const fs = require("fs");
 const path = require("path");
 const corsOptions = require("./config/cors/corsOptions");
+const { instrument } = require("@socket.io/admin-ui");
 
 //Handle Uncaught Exceptions
 process.on("uncaughtException", (error) => {
@@ -55,9 +56,18 @@ const io = new Server(server);
 //Create Emitter-Reciever Socket IO namespace
 const erIO = io.of("/er");
 
+//Connect to admin dashboard
+instrument(io, {
+  auth: false,
+  mode: "development",
+});
+
 //Listen for socket connection
 erIO.on("connection", (socket) => {
   console.log(socket?.id);
+  socket.on("enc-data-stream", (data) => {
+    console.log("encdata", data);
+  });
 });
 
 //On Client Disconnect

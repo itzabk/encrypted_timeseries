@@ -4,6 +4,7 @@ const whitelist = [
   `https://localhost:${process.env.PORT}`,
   `http://localhost:3000`,
   `ws://localhost`,
+  `https://admin.socket.io/*`,
 ];
 
 module.exports = whitelist;

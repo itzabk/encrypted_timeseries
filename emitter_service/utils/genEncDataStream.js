@@ -3,6 +3,7 @@ const {
   generateHashedMsg,
   encryptHashedMessage,
 } = require("./genMessage");
+const generateRandomNumFromRange = require("./getNumFromRange");
 //@desc Generate Encryoted Data stream
 function generateEncryptedDataStream(data) {
   try {
@@ -10,7 +11,6 @@ function generateEncryptedDataStream(data) {
     const { names, cities } = data;
     const encArry = [];
     const num = generateRandomNumFromRange(process.env.MIN, process.env.MAX);
-
     for (let i = 0; i < num; i++) {
       const msg = generateMsgObj(names, cities);
       const hashMsg = generateHashedMsg(msg);
@@ -19,6 +19,8 @@ function generateEncryptedDataStream(data) {
     }
     return encArry.join("|");
   } catch (err) {
+    console.log(err);
+
     console.log(`Encrypted Messaging failed ${err.name} => ${err.message}`);
   }
 }

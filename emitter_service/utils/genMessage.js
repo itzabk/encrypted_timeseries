@@ -1,5 +1,6 @@
 const generateRandomNumFromRange = require("./getNumFromRange");
 const crypto = require("crypto");
+var CryptoJS = require("crypto-js");
 
 //@desc Generate a random message object
 function generateMsgObj(names = [], cities = []) {
@@ -45,15 +46,15 @@ function generateHashedMsg(obj) {
 function encryptHashedMessage(obj) {
   try {
     const message = JSON.stringify(obj);
-    const cipher = crypto.createCipheriv(
-      process.env.ENCRYPT_ALGO,
-      process.env.SECRET_KEY,
-      process.env.PASSPHRASE
+    const encryptedData = CryptoJS.AES.encrypt(
+      message,
+      process.env.PASSPHRASE,
+      {
+        mode: CryptoJS.mode.CTR,
+      }
     );
-    let encryptedData = cipher.update(message, "utf-8", "hex");
-    encryptedData += cipher.final("hex");
     return encryptedData;
-  } catch (error) {
+  } catch (err) {
     console.log(
       `utils/genMessage[encryptHashedMessage] ${err.name} => ${err.message}`
     );

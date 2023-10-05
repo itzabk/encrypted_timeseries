@@ -38,7 +38,7 @@ socket.on("connect_error", (err) => {
 
 //On disconnection
 socket.on("disconnect", () => {
-  console.log(`${socket.id} disconnected`);
+  console.log(`Server disconnected`);
 });
 
 //Handle Unhandled Rejections
