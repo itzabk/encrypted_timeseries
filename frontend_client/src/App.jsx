@@ -1,9 +1,13 @@
-import React from 'react'
+import React from "react";
+import TimeSeries from "./components/TimeSeries/TimeSeries";
+import { Container } from "@mui/material";
 
 const App = () => {
   return (
-    <div>App</div>
-  )
-}
+    <Container>
+      <TimeSeries />
+    </Container>
+  );
+};
 
-export default App
+export default App;

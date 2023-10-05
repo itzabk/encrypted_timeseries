@@ -53,7 +53,7 @@ const server = https.createServer(
 );
 
 //Create Socket IO instance
-const io = new Server(server);
+const io = new Server(server, { cors: { origin: ["http://localhost:3000"] } });
 //Create Emitter-Reciever Socket IO namespace
 const erIO = io.of("/er");
 
@@ -67,7 +67,6 @@ instrument(io, {
 erIO.on("connection", (socket) => {
   console.log(socket?.id);
   socket.on("enc-data-stream", async (data) => {
-    console.log("encdata", data);
     const result = await handleIncomingData(data);
     socket.emit("frontend", result);
   });
