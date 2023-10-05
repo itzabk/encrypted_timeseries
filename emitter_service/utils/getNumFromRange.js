@@ -1,3 +1,4 @@
+//@desc generate random number from a range
 const generateRandomNumFromRange = (min = 0, max = 1) => {
   try {
     min = Number(min);
