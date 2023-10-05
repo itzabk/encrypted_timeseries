@@ -3,7 +3,7 @@ const CryptoJS = require("crypto-js");
 //@desc Decrypt encrypted message using Crypto Library
 const decryptMessage = (encMessage) => {
   try {
-    const decrypMsg = CryptoJS.AES.decrypt(str, process.env.PASS_KEY, {
+    const decrypMsg = CryptoJS.AES.decrypt(encMessage, process.env.PASSPHRASE, {
       mode: CryptoJS.mode.CTR,
     });
     const strMsg = decrypMsg.toString(CryptoJS.enc.Utf8);

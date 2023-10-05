@@ -1,40 +1,30 @@
 const mongoose = require("mongoose");
 
-const timeseriesSchema = mongoose.Schema(
-  {
-    name: {
-      type: String,
-      required: true,
-      trim: true,
-    },
-    timestamp: {
-      type: Date,
-      required: true,
-    },
-    count: {
-      type: Number,
-      default: 0,
-    },
-    totalCount: {
-      type: Number,
-      default: 0,
-    },
-    data: [
-      {
-        origin: { type: String },
-        destination: { type: String },
-      },
-    ],
+const timeseriesSchema = new mongoose.Schema({
+  name: {
+    type: String,
+    required: true,
+    trim: true,
   },
-  {
-    timeseries: {
-      timeField: "timestamp",
-      metaField: "timestamp",
-      granularity: "minutes",
+  timestamp: {
+    type: Date,
+    required: true,
+  },
+  counter: {
+    type: Number,
+  },
+  totalCount: {
+    type: Number,
+    required: true,
+  },
+  data: [
+    {
+      origin: { type: String, required: true },
+      destination: { type: String, required: true },
     },
-  }
-);
+  ],
+});
 
-const TimeSeries = mongoose.model("TimeSeries", timeseriesSchema);
+const TimeSeriesModel = mongoose.model("TimeSeries", timeseriesSchema);
 
-module.exports = TimeSeries;
+module.exports = TimeSeriesModel;

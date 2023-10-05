@@ -1,4 +1,4 @@
-const TimeSeries = require("../model/TimeSeries");
+const TimeSeriesModel = require("../model/TimeSeries");
 const compareHash = require("./compareHash");
 const decryptMessage = require("./decryptMessage");
 const encodeMessage = require("./encodeMessage");
@@ -18,7 +18,12 @@ const handleIncomingData = async (encMessage) => {
     );
     decArr.forEach((ele, i) => {
       if (compareHash(ele, hashArr[i])) {
-        positiveCat.push({ ...ele, timestamp: new Date().setSeconds(0, 0) });
+        positiveCat.push({
+          name: ele?.name,
+          origin: ele?.origin,
+          destination: ele?.destination,
+          timestamp: new Date().setSeconds(0, 0),
+        });
       } else {
         negativeCat.push({
           name: ele.name,
@@ -26,17 +31,17 @@ const handleIncomingData = async (encMessage) => {
         });
       }
     });
+
     positiveCat.forEach(async (ele) => {
-      await TimeSeries.updateOne(
+      const data = await TimeSeriesModel.updateOne(
         {
           name: ele.name,
           timestamp: ele.timestamp,
         },
         {
+          $inc: { counter: 1, totalCount: 1 },
           name: ele.name,
           timestamp: ele.timestamp,
-          $inc: { count: 1 },
-          $inc: { totalcount: 1 },
           $push: {
             data: {
               destination: ele.destination,
@@ -47,12 +52,12 @@ const handleIncomingData = async (encMessage) => {
         { upsert: true }
       );
       negativeCat.forEach(async (ele) => {
-        await TimeSeries.updateOne(
+        await TimeSeriesModel.updateOne(
           {
             name: ele.name,
             timestamp: ele.timestamp,
           },
-          { $inc: { totalcount: 1 } },
+          { $inc: { totalCount: 1 } },
           { upsert: true }
         );
       });

@@ -9,7 +9,6 @@ process.on("uncaughtException", (error) => {
   console.log(
     `Exception Occured: Name: ${error.name} =>  Message:${error.message} ${error.stack}`
   );
-  process.exit(1);
 });
 
 //Get Parsed Data
@@ -33,7 +32,9 @@ socket.on("connect", () => {
 
 //On connection error
 socket.on("connect_error", (err) => {
-  console.log("Could not connect to server, Please try again later", err);
+  socket.close();
+  console.log("Could not connect to server, Please try again later");
+
 });
 
 //On disconnection
