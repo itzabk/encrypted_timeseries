@@ -66,9 +66,9 @@ instrument(io, {
 //Listen for socket connection
 erIO.on("connection", (socket) => {
   console.log(socket?.id);
-  socket.on("enc-data-stream", (data) => {
+  socket.on("enc-data-stream", async (data) => {
     console.log("encdata", data);
-    const result = handleIncomingData(data);
+    const result = await handleIncomingData(data);
     socket.emit("frontend", result);
   });
 });

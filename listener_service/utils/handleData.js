@@ -33,7 +33,7 @@ const handleIncomingData = async (encMessage) => {
     });
 
     positiveCat.forEach(async (ele) => {
-      const data = await TimeSeriesModel.updateOne(
+      await TimeSeriesModel.updateOne(
         {
           name: ele.name,
           timestamp: ele.timestamp,
@@ -61,7 +61,13 @@ const handleIncomingData = async (encMessage) => {
           { upsert: true }
         );
       });
-      return JSON.stringify(positiveCat);
+
+      const data = await TimeSeriesModel.find({}).lean().exec();
+      if (!data?.length) {
+        console.log("Nothing to fetch yet..!");
+      }
+      console.log("Data", JSON.stringify(data));
+      return JSON.stringify(data);
     });
   } catch (error) {
     console.log(`utils/handleData ${error.name}=>${error.message}`);
