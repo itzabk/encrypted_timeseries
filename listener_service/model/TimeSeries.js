@@ -29,7 +29,7 @@ const timeseriesSchema = mongoose.Schema(
   {
     timeseries: {
       timeField: "timestamp",
-      metaField: _id,
+      metaField: "timestamp",
       granularity: "minutes",
     },
   }

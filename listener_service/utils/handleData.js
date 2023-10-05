@@ -8,7 +8,7 @@ const handleIncomingData = async (encMessage) => {
   try {
     const positiveCat = [];
     const negativeCat = [];
-    const decArr = encMessage.encSplit("|").map((ele) => decryptMessage(ele));
+    const decArr = encMessage.split("|").map((ele) => decryptMessage(ele));
     const hashArr = decArr.map((ele) =>
       encodeMessage({
         name: ele?.name,
@@ -59,7 +59,7 @@ const handleIncomingData = async (encMessage) => {
       return JSON.stringify(positiveCat);
     });
   } catch (error) {
-    console.log(`middlewares/handleData ${error.name}=>${error.message}`);
+    console.log(`utils/handleData ${error.name}=>${error.message}`);
   }
 };
 

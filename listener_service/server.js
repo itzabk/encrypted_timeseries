@@ -14,6 +14,7 @@ const fs = require("fs");
 const path = require("path");
 const corsOptions = require("./config/cors/corsOptions");
 const { instrument } = require("@socket.io/admin-ui");
+const handleIncomingData = require("./utils/handleData");
 
 //Handle Uncaught Exceptions
 process.on("uncaughtException", (error) => {
@@ -66,8 +67,9 @@ instrument(io, {
 erIO.on("connection", (socket) => {
   console.log(socket?.id);
   socket.on("enc-data-stream", (data) => {
-
     console.log("encdata", data);
+    const result = handleIncomingData(data);
+    socket.emit("frontend", result);
   });
 });
 
