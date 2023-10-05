@@ -21,8 +21,8 @@ const timeseriesSchema = mongoose.Schema(
     },
     data: [
       {
-        origin: { type: String, required: true },
-        destination: { type: String, required: true },
+        origin: { type: String },
+        destination: { type: String },
       },
     ],
   },

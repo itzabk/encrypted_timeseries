@@ -66,6 +66,7 @@ instrument(io, {
 erIO.on("connection", (socket) => {
   console.log(socket?.id);
   socket.on("enc-data-stream", (data) => {
+
     console.log("encdata", data);
   });
 });
