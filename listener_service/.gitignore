@@ -2,8 +2,8 @@
 
 # dependencies
 /node_modules
-/config/https/cert.pem
-/config/https/key.pem
+/config/https/server.cert
+/config/https/server.key
 
 # misc
 .DS_Store
