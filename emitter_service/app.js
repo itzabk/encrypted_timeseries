@@ -2,6 +2,7 @@ require("dotenv").config();
 const io = require("socket.io-client");
 const readFile = require("./utils/readFile");
 const path = require("path");
+const genEncDataStream = require("./utils/genEncDataStream");
 
 //Handle Uncaught Exceptions
 process.on("uncaughtException", (error) => {
@@ -13,8 +14,6 @@ process.on("uncaughtException", (error) => {
 
 //Get Parsed Data
 const data = readFile(path.join(__dirname, "data", "data.json"));
-//Extract names-cities from parsed data obj
-const { names, cities } = data;
 
 //Connect with socket instance of reciever
 const socket = io(`${process.env.SERVER_URL}`, { rejectUnauthorized: false });
@@ -22,6 +21,11 @@ const socket = io(`${process.env.SERVER_URL}`, { rejectUnauthorized: false });
 //On connection
 socket.on("connect", () => {
   console.log(socket.id);
+  if (socket.connected) {
+    setInterval(() => {
+      socket.emit("enc-data-stream", genEncDataStream(data));
+    }, process.env.TIME_IN_SEC * 1000);
+  }
 });
 
 //On connection error

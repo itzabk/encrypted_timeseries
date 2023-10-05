@@ -41,4 +41,23 @@ function generateHashedMsg(obj) {
   }
 }
 
-module.exports = { generateMsgObj, generateHashedMsg };
+//@desc Encrypt message with Cipher algorithm
+function encryptHashedMessage(obj) {
+  try {
+    const message = JSON.stringify(obj);
+    const cipher = crypto.createCipheriv(
+      process.env.ENCRYPT_ALGO,
+      process.env.SECRET_KEY,
+      process.env.PASSPHRASE
+    );
+    let encryptedData = cipher.update(message, "utf-8", "hex");
+    encryptedData += cipher.final("hex");
+    return encryptedData;
+  } catch (error) {
+    console.log(
+      `utils/genMessage[encryptHashedMessage] ${err.name} => ${err.message}`
+    );
+  }
+}
+
+module.exports = { generateMsgObj, generateHashedMsg, encryptHashedMessage };
