@@ -8,16 +8,20 @@ Make a small backend application which can generate and emit an encrypted data s
 2. Listener Service
 3. Frontend App
 
+##git clone [repo_name]
+
 ##Listener Service Execution Steps:
 
 1. cd config > https
 2. Run command : openssl req -nodes -new -x509 -keyout server.key -out server.cert OR npm run gen-cred
 3. cd to root
-4. npm start or npm run dev
+4. npm install
+5. npm start or npm run dev
 
 ##Emitter Service Execution Steps:
 
-1. npm start or npm run dev
+1. npm install
+2. npm start or npm run dev
 
 ##Frontend Service
 
