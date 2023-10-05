@@ -3,6 +3,14 @@ const io = require("socket.io-client");
 const readFile = require("./utils/readFile");
 const path = require("path");
 
+//Handle Uncaught Exceptions
+process.on("uncaughtException", (error) => {
+  console.log(
+    `Exception Occured: Name: ${error.name} =>  Message:${error.message} ${error.stack}`
+  );
+  process.exit(1);
+});
+
 //Get Parsed Data
 const data = readFile(path.join(__dirname, "data", "data.json"));
 //Extract names-cities from parsed data obj
@@ -24,4 +32,13 @@ socket.on("connect_error", (err) => {
 //On disconnection
 socket.on("disconnect", () => {
   console.log(`${socket.id} disconnected`);
+});
+
+//Handle Unhandled Rejections
+process.on("unhandledRejection", (error) => {
+  console.log(
+    `Rejection Occured : Name: ${error.name} =>  Message:${error.message}`
+  );
+  server.close();
+  process.exit(1);
 });
