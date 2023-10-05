@@ -26,6 +26,9 @@ socket.on("connect", () => {
       socket.emit("enc-data-stream", genEncDataStream(data));
     }, process.env.TIME_IN_SEC * 1000);
   }
+  socket.on("error", () => {
+    console.log("Encrypted data stream transmission failed");
+  });
 });
 
 //On connection error
