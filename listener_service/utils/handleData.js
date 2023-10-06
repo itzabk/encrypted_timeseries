@@ -49,7 +49,10 @@ const handleIncomingData = async (encMessage) => {
           );
         }
       });
-    const data = await TimeSeriesModel.find({}).lean().exec();
+    const data = await TimeSeriesModel.find({})
+      .select({ name: 1, timestamp: 1, counter: 1, totalCount: 1 })
+      .lean()
+      .exec();
     if (!data?.length) {
       console.log("Nothing to fetch yet..!");
     }
