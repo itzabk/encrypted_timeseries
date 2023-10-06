@@ -53,6 +53,7 @@ const handleIncomingData = async (encMessage) => {
     if (!data?.length) {
       console.log("Nothing to fetch yet..!");
     }
+
     return JSON.stringify(data);
   } catch (error) {
     console.log(`utils/handleData ${error.name}=>${error.message}`);

@@ -11,11 +11,11 @@ const TimeSeries = () => {
   const [data, setData] = useState([]);
 
   socket.on("frontend", (data) => {
-    const parsedData = JSON.parse(data);
-    setData(parsedData);
+    console.log(data)
+
   });
 
-  console.log(data);
+
 
   return <div>TimeSeries</div>;
 };
