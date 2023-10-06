@@ -4,6 +4,7 @@
 /node_modules
 /config/https/server.cert
 /config/https/server.key
+/Logs
 
 # misc
 .DS_Store
