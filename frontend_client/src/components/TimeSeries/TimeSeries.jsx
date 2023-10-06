@@ -8,6 +8,7 @@ import {
   Box,
   Stack,
 } from "@mui/material";
+import BouncingDotsLoader from "../BouncingLoader/BouncingLoader";
 
 const socket = io("https://127.0.0.1:3001/er");
 
@@ -24,12 +25,16 @@ const TimeSeries = () => {
   });
 
   return (
-    <Container>
-      <Typography variant="h4" color={"secondary"} sx={{ textAlign: "center" }}>
+    <Container sx={{ backgroundColor: "whitesmoke" }}>
+      <Typography
+        variant="h4"
+        color={"secondary"}
+        sx={{ textAlign: "center", fontFamily: "monospace" }}
+      >
         ENCRYPTED TIMESERIES LOG
       </Typography>
       <Stack sx={{ border: "3px solid black" }}>
-        {data?.length > 0 && (
+        {data?.length > 0 ? (
           <List sx={{ alignItems: "center", justifyContent: "center" }}>
             {data.map((ele, i) => {
               return (
@@ -43,7 +48,7 @@ const TimeSeries = () => {
                       textAlign: "justify",
                     }}
                   >
-                    {`Name:${ele?.name}\t||\t${
+                    {`Name:${ele?.name}\t||\tStamp:${
                       ele?.timestamp
                     }\t||\tSuccessful Encryption:${
                       ele?.counter ? ele.counter : 0
@@ -59,6 +64,8 @@ const TimeSeries = () => {
               );
             })}
           </List>
+        ) : (
+          <BouncingDotsLoader />
         )}
       </Stack>
     </Container>
