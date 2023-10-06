@@ -12,7 +12,7 @@ Make a small backend application which can generate and emit an encrypted data s
 ##git clone [repo_name]
 
 ##Listener Service Execution Steps:
-1. cd config > mkdir https //create https folder inside config
+1. cd config > mkdir https //create https folder inside config if not present
 2. cd config > https //move to https folder
 3. Run command : openssl req -nodes -new -x509 -keyout server.key -out server.cert //generate certificate and key
 4. cd to root //move back to root
