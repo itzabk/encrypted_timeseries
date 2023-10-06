@@ -42,7 +42,7 @@ const handleIncomingData = async (encMessage) => {
           await TimeSeriesModel.updateOne(
             {
               name: ele.name,
-              timestamp: ele.timestamp,
+              timestamp: new Date().setSeconds(0, 0),
             },
             { $inc: { totalCount: 1 } },
             { upsert: true }

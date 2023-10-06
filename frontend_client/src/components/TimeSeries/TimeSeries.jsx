@@ -9,6 +9,7 @@ import {
   Stack,
 } from "@mui/material";
 import BouncingDotsLoader from "../BouncingLoader/BouncingLoader";
+import { format } from "date-fns";
 
 const socket = io("https://127.0.0.1:3001/er");
 
@@ -25,7 +26,7 @@ const TimeSeries = () => {
   });
 
   return (
-    <Container sx={{ backgroundColor: "whitesmoke" }}>
+    <Container maxWidth={"xl"} sx={{ backgroundColor: "whitesmoke" }}>
       <Typography
         variant="h4"
         color={"secondary"}
@@ -44,18 +45,19 @@ const TimeSeries = () => {
                       borderBottom: "1px solid gray",
                       fontFamily: "monospace",
                       fontWeight: 700,
-                      fontSize: "0.7rem",
+                      fontSize: "0.65rem",
                       textAlign: "justify",
                     }}
                   >
-                    {`Name:${ele?.name}\t||\tStamp:${
-                      ele?.timestamp
-                    }\t||\tSuccessful Encryption:${
+                    {`Name:${ele?.name}\t||\tStamp:${format(
+                      new Date(ele?.timestamp),
+                      "yyyy-LLL-dd\tpp"
+                    )}\t||\tSuccessful Encryption-Decryption:${
                       ele?.counter ? ele.counter : 0
                     }\t||\tData Integrity Success Percentage: ${
                       ((ele?.counter ?? 0) / ele?.totalCount) * 100
                     }%\t||\tData Integrity Failure Percentage ${
-                      ((ele?.totalCount - ele?.counter ?? 0) /
+                      ((ele?.totalCount - (ele?.counter || 0)) /
                         ele?.totalCount) *
                       100
                     }%`}
