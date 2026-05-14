@@ -1,46 +1,98 @@
-# encrypted_timeseries
+# Encrypted Time Series
 
-#Problem Statement
-Make a small backend application which can generate and emit an encrypted data stream over a socket, listens to incoming data stream on a socket, decrypts and decodes it, save to a time series db and then emit the saved data to a small frontend app. Backend services can be in any language (Node JS is preferred, but use Go or any other that you are comfortable with).
+> Node.js 18+ · npm 10+ · React 18 · MongoDB
 
-##Modules
+A lightweight Node.js project that emits encrypted time series data from an emitter service, receives and decrypts it in a listener service, stores it in MongoDB, and displays the stream in a React frontend.
 
-1. Emitter Service
-2. Listener Service
-3. Frontend App
+## Requirements
 
-##git clone [repo_name]
+- Node.js 18+ (recommended)
+- npm 10+ or yarn
+- MongoDB instance for `listener_service`
+- OpenSSL for generating TLS credentials
 
-##Listener Service Execution Steps:
-1. cd config > mkdir https //create https folder inside config if not present
-2. cd config > https //move to https folder
-3. Run command : openssl req -nodes -new -x509 -keyout server.key -out server.cert //generate certificate and key
-4. cd to root //move back to root
-5. npm install //install deps
-6. npm start or npm run dev //start project
+## Repository Structure
 
-##Emitter Service Execution Steps:
+- `emitter_service/` — sends encrypted data to the listener
+- `listener_service/` — decrypts, stores, and exposes the data
+- `frontend_client/` — React app displaying the saved time series
 
-1. npm install //install deps
-2. npm start or npm run dev //start project once listner is running
+## Setup
 
-##Frontend Service
+1. Clone the repository
+2. Install dependencies in each service folder
 
-1. npm start //start react project
+```bash
+cd listener_service
+npm install
 
-###Listner .ENV Configuration
+cd ../emitter_service
+npm install
 
-1. NODE_ENV = "dev"
-2. MONGO_URI = 'your mongo_uri'
-3. PORT = 3001
-4. HASH_ALGO = 'sha256'
-5. PASSPHRASE = 'yourpassphrase_key'
+cd ../frontend_client
+npm install
+```
 
-###Emitter .ENV Configuration
+## Listener Service
 
-1. SERVER_URL = 'https://127.0.0.1:3001/er'
-2. HASH_ALGO = 'sha256'
-3. PASSPHRASE = 'yourpassphrase_key'
-4. MIN = 49
-5. MAX = 499
-6. TIME_IN_SEC = 10
+### Generate TLS credentials
+
+```bash
+cd listener_service
+npm run gen-cred
+```
+
+### Required `.env`
+
+Create `listener_service/.env` with:
+
+```env
+NODE_ENV=dev
+MONGO_URI=<your_mongo_uri>
+PORT=3001
+HASH_ALGO=sha256
+PASSPHRASE=<your_passphrase>
+```
+
+### Start listener
+
+```bash
+npm start
+```
+
+Use `npm run dev` for local development with `nodemon`.
+
+## Emitter Service
+
+Create `emitter_service/.env` with:
+
+```env
+SERVER_URL=https://127.0.0.1:3001/er
+HASH_ALGO=sha256
+PASSPHRASE=<your_passphrase>
+MIN=49
+MAX=499
+TIME_IN_SEC=10
+```
+
+Start the emitter:
+
+```bash
+cd emitter_service
+npm start
+```
+
+## Frontend Client
+
+```bash
+cd frontend_client
+npm start
+```
+
+Open the browser at `http://localhost:3000`.
+
+## Notes
+
+- `listener_service` must be running before `emitter_service`
+- Ensure matching `PASSPHRASE` and `HASH_ALGO` values across services
+- Use TLS credentials from `listener_service` for secure socket communication
